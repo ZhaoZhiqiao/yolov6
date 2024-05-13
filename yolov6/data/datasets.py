@@ -29,7 +29,7 @@ from .data_augment import (
     random_affine,
     mosaic_augmentation,
 )
-from yolov6.utils.events import LOGGER
+from detector.neural_networks.yolov6.yolov6.utils.events import LOGGER
 import copy
 import psutil
 from multiprocessing.pool import ThreadPool
