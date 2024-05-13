@@ -4,11 +4,11 @@ import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from yolov6.layers.common import *
-from yolov6.utils.torch_utils import initialize_weights
-from yolov6.models.efficientrep import *
-from yolov6.models.reppan import *
-from yolov6.utils.events import LOGGER
+from detector.neural_networks.yolov6.yolov6.layers.common import *
+from detector.neural_networks.yolov6.yolov6.utils.torch_utils import initialize_weights
+from detector.neural_networks.yolov6.yolov6.models.efficientrep import *
+from detector.neural_networks.yolov6.yolov6.models.reppan import *
+from detector.neural_networks.yolov6.yolov6.utils.events import LOGGER
 
 
 class Model(nn.Module):
@@ -112,7 +112,7 @@ def build_network(config, channels, num_classes, num_layers, fuse_ab=False, dist
         )
 
     if distill_ns:
-        from yolov6.models.heads.effidehead_distill_ns import Detect, build_effidehead_layer
+        from detector.neural_networks.yolov6.yolov6.models.heads.effidehead_distill_ns import Detect, build_effidehead_layer
         if num_layers != 3:
             LOGGER.error('ERROR in: Distill mode not fit on n/s models with P6 head.\n')
             exit()
@@ -120,13 +120,13 @@ def build_network(config, channels, num_classes, num_layers, fuse_ab=False, dist
         head = Detect(num_classes, num_layers, head_layers=head_layers, use_dfl=use_dfl)
 
     elif fuse_ab:
-        from yolov6.models.heads.effidehead_fuseab import Detect, build_effidehead_layer
+        from detector.neural_networks.yolov6.yolov6.models.heads.effidehead_fuseab import Detect, build_effidehead_layer
         anchors_init = config.model.head.anchors_init
         head_layers = build_effidehead_layer(channels_list, 3, num_classes, reg_max=reg_max, num_layers=num_layers)
         head = Detect(num_classes, anchors_init, num_layers, head_layers=head_layers, use_dfl=use_dfl)
 
     else:
-        from yolov6.models.effidehead import Detect, build_effidehead_layer
+        from detector.neural_networks.yolov6.yolov6.models.effidehead import Detect, build_effidehead_layer
         head_layers = build_effidehead_layer(channels_list, 1, num_classes, reg_max=reg_max, num_layers=num_layers)
         head = Detect(num_classes, num_layers, head_layers=head_layers, use_dfl=use_dfl)
 

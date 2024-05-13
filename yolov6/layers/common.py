@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 import torch.nn.init as init
 from torch.nn.parameter import Parameter
-from yolov6.utils.general import download_ckpt
+from detector.neural_networks.yolov6.yolov6.utils.general import download_ckpt
 
 
 activation_table = {'relu':nn.ReLU(),
@@ -554,7 +554,7 @@ class DetectBackend(nn.Module):
         if not os.path.exists(weights):
             download_ckpt(weights) # try to download model from github automatically.
         assert isinstance(weights, str) and Path(weights).suffix == '.pt', f'{Path(weights).suffix} format is not supported.'
-        from yolov6.utils.checkpoint import load_checkpoint
+        from detector.neural_networks.yolov6.yolov6.utils.checkpoint import load_checkpoint
         model = load_checkpoint(weights, map_location=device)
         stride = int(model.stride.max())
         self.__dict__.update(locals())  # assign all variables to self

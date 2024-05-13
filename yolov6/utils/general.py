@@ -7,7 +7,7 @@ import torch
 import requests
 import pkg_resources as pkg
 from pathlib import Path
-from yolov6.utils.events import LOGGER
+from detector.neural_networks.yolov6.yolov6.utils.events import LOGGER
 
 def increment_name(path):
     '''increase save directory's id'''

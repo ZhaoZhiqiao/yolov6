@@ -8,7 +8,7 @@ import torch
 import torch.distributed as dist
 import torch.nn as nn
 import torch.nn.functional as F
-from yolov6.utils.events import LOGGER
+from detector.neural_networks.yolov6.yolov6.utils.events import LOGGER
 
 try:
     import thop  # for FLOPs computation
@@ -84,7 +84,7 @@ def fuse_conv_and_bn(conv, bn):
 
 def fuse_model(model):
     '''Fuse convolution and batchnorm layers of the model.'''
-    from yolov6.layers.common import ConvModule
+    from detector.neural_networks.yolov6.yolov6.layers.common import ConvModule
 
     for m in model.modules():
         if type(m) is ConvModule and hasattr(m, "bn"):

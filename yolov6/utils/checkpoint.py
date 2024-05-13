@@ -4,8 +4,8 @@ import os
 import shutil
 import torch
 import os.path as osp
-from yolov6.utils.events import LOGGER
-from yolov6.utils.torch_utils import fuse_model
+from detector.neural_networks.yolov6.yolov6.utils.events import LOGGER
+from detector.neural_networks.yolov6.yolov6.utils.torch_utils import fuse_model
 
 
 def load_state_dict(weights, model, map_location=None):
@@ -22,6 +22,8 @@ def load_state_dict(weights, model, map_location=None):
 def load_checkpoint(weights, map_location=None, inplace=True, fuse=True):
     """Load model from checkpoint file."""
     LOGGER.info("Loading checkpoint from {}".format(weights))
+    import sys
+    sys.path.insert(0,"detector/neural_networks/yolov6")
     ckpt = torch.load(weights, map_location=map_location)  # load
     model = ckpt['ema' if ckpt.get('ema') else 'model'].float()
     if fuse:
