@@ -55,10 +55,10 @@ class Inferer:
         self.files = LoadData(source, webcam, webcam_addr)
         self.source = source
 
-
-    def model_switch(self, model, img_size):
+    @staticmethod
+    def model_switch(model):
         ''' Model switch to deploy status '''
-        from yolov6.layers.common import RepVGGBlock
+        from detector.neural_networks.yolov6.yolov6.layers.common import RepVGGBlock
         for layer in model.modules():
             if isinstance(layer, RepVGGBlock):
                 layer.switch_to_deploy()
